@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="G5wICB_Vii5jVAjmQujdA8qFkXtF8KKQl32f7lWRG38" />
     <title>라엘리안 달력 - 우주인 엘로힘의 메시지</title>
-    <link rel="icon" href="http://fav.farm/%E2%9D%A4%EF%B8%8F" />
+	<link rel="icon" href="http://fav.farm/%E2%9D%A4%EF%B8%8F" />
     <meta name="description" content="인류의 창조자 엘로힘과 라엘리안 무브먼트의 메시지를 AI 챗봇을 통해 알아보세요. 엘로힘의 지혜를 공유합니다.">
     <meta name="keywords" content="라엘리안, 엘로힘, 외계인 대사관, 무한, 과학적 창조론, AI 챗봇, 라엘">
     <meta name="author" content="라엘리안 무브먼트">
@@ -139,6 +139,20 @@
                 };
                 return data[y] || { embassy: [] };
             }
+            // [신규] 매년 음력 4월 8일에 대응하는 양력 [월, 일]을 자동으로 계산해 주는 매직 함수 (2024년 ~ 2060년 커버)
+            function getSolarBuddhaDay(y) {
+                const data = {
+                    2024:[5,15], 2025:[5,5], 2026:[5,24], 2027:[5,13], 2028:[5,2],
+                    2029:[5,20], 2030:[5,9], 2031:[5,28], 2032:[5,16], 2033:[5,6],
+                    2034:[5,25], 2035:[5,15], 2036:[5,3], 2037:[5,22], 2038:[5,12],
+                    2039:[5,1], 2040:[5,19], 2041:[5,8], 2042:[5,26], 2043:[5,16],
+                    2044:[5,5], 2045:[5,24], 2046:[5,13], 2047:[6,2], 2048:[5,20],
+                    2049:[5,9], 2050:[5,28], 2051:[5,17], 2052:[5,6], 2053:[5,25],
+                    2054:[5,14], 2055:[5,4], 2056:[5,22], 2057:[5,11], 2058:[5,1],
+                    2059:[5,19], 2060:[5,8]
+                };
+                return data[y] || null; // 범위 밖의 미래 연도는 null 반환
+            }
 
             function getFirstSundayOfApril(y) { let d = new Date(y, 3, 1); while(d.getDay()!==0) d.setDate(d.getDate()+1); return d.getDate(); }
             function getLastSaturdayOfJune(y) { let d = new Date(y, 6, 0); while(d.getDay()!==6) d.setDate(d.getDate()-1); return d.getDate(); }
@@ -195,6 +209,15 @@
                     // item[0]은 월(1~12), item[1]은 일
                     dynamicEvents.push({ m: item[0] - 1, d: item[1], n: "우주인 대사관의 날" });
                 });
+                // [자동화 적용 부] 현재 달력 연도를 기반으로 부처님 오신날의 양력 날짜를 자동 계산하여 배열에 주입
+                const buddhaDay = getSolarBuddhaDay(y);
+                if (buddhaDay) {
+                    dynamicEvents.push({ 
+                        m: buddhaDay[0] - 1, 
+                        d: buddhaDay[1], 
+                        n: "부처님 오신 날" 
+                    });
+                }
 
                 const allEvents = staticEvents.concat(dynamicEvents);
                 let currentMonthEvents = allEvents.filter(e => e.m === m).map(e => ({...e, type: 'day'}));
@@ -267,7 +290,7 @@
             <a href="/calendar.html">라엘리안 달력</a>
             <a href="/wiki.html">라엘 위키</a>
         </div>
-        <p class="copyright">© <script type='text/javascript'>var year = new Date();document.write(year.getFullYear());</script> Korea Raelian Movement. All Rights Reserved.<br/>인류의 창조자 엘로힘을 맞이하기 위한 프로젝트</p>
+        <p class="copyright">© <script type='text/javascript'>var year = new Date();document.write(year.getFullYear());</script> RaelKorea. All Rights Reserved.<br/>인류의 창조자 엘로힘을 맞이하기 위한 프로젝트</p>
     </div>
 </footer>
 </body>
